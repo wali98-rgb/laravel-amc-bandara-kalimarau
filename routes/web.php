@@ -8,3 +8,6 @@ Route::get('/', function () {
 });
 
 // Routing Admin
+Route::get('/!4Dm1n5', function () {
+    return view('admin.layouts.master');
+});
