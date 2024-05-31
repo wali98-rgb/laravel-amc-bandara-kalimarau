@@ -8,6 +8,8 @@
 
     {{-- My Link CDN --}}
     @include('assets.css')
+    <link rel="stylesheet" href="{{ asset('frontend/css/frontend-app.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/partials/Navbar.css') }}">
 
     <title>AMC Bandara Kalimarau | AMC-BK</title>
 </head>

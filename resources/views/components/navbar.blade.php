@@ -1,3 +1,13 @@
-<div>
-    <!-- Nothing in life is to be feared, it is only to be understood. Now is the time to understand more, so that we may fear less. - Marie Curie -->
-</div>
+{{-- Navbar Session --}}
+<nav class="n4p21R_">
+    <div class="n4p21Rl0">
+        <a href="/">
+            <img src="" alt="AMC Bandara Kalimarau">
+        </a>
+    </div>
+    <div class="n4p21RexT">
+        <li><a href="/">Dashboard</a></li>
+        <li><a href="/kejadian">Kejadian</a></li>
+        <li><a href="/tentang-kami">Tentang Kami</a></li>
+    </div>
+</nav>
