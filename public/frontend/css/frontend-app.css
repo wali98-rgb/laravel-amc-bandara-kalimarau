@@ -1,0 +1,24 @@
+:root {
+    --pR1m4: rgb(6, 55, 119);
+    --s3C0nD: rgb(0, 163, 122);
+    --b9: rgb(221, 221, 221);
+    --n4p21R: rgba(6, 55, 119, .8);
+    --cL12F: rgb(255, 255, 255);
+    --cL12F2: rgb(0, 0, 0);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Gabarito", sans-serif;
+    background-color: var(--b9);
+}

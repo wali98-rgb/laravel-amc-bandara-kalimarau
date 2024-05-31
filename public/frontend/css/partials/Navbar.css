@@ -1,0 +1,51 @@
+/* Navbar Session CSS */
+.n4p21R_ {
+    padding: 1.5rem 7%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: var(--n4p21R);
+}
+
+.n4p21R_ .n4p21Rl0 a {
+    width: 20%;
+    height: 100%;
+    font-size: 1.2rem;
+    color: var(--cL12F);
+}
+
+.n4p21R_ .n4p21Rl0 a:hover {
+    text-decoration: none;
+}
+
+.n4p21R_ .n4p21Rl0 a img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.n4p21R_ .n4p21RexT {
+    display: flex;
+    align-items: center;
+}
+
+.n4p21R_ .n4p21RexT li a {
+    margin: 0 2rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--cL12F);
+}
+
+.n4p21R_ .n4p21RexT li a:hover {
+    text-decoration: none;
+    text-shadow: 0px 0px 1px var(--cL12F2);
+    color: rgb(230, 230, 230);
+}
+
+.n4p21R_ .n4p21RexT li a:first-child {
+    margin: 0 2rem 0 0;
+}
+
+.n4p21R_ .n4p21RexT li a:last-child {
+    margin: 0 0 0 2rem;
+}
