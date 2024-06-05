@@ -1,10 +1,15 @@
 /* Navbar Session CSS */
 .n4p21R_ {
+    position: fixed;
     padding: 1rem 7%;
+    top: 0;
+    left: 0;
+    right: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     background-color: var(--n4p21R);
+    z-index: 999;
 }
 
 .n4p21R_ .n4p21Rl0 {
