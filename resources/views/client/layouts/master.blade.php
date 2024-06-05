@@ -15,20 +15,24 @@
 </head>
 
 <body>
-    {{-- Preloader Session Start --}}
-    {{-- Preloader Session End --}}
+    {{-- Preloader Section Start --}}
+    {{-- Preloader Section End --}}
 
-    {{-- Navbar Session Start --}}
+    {{-- Navbar Section Start --}}
     <x-navbar></x-navbar>
-    {{-- Navbar Session End --}}
+    {{-- Navbar Section End --}}
 
-    {{-- Main Content Session Start --}}
+    {{-- Carousel Section Start --}}
+    @yield('carousel')
+    {{-- Carousel Section End --}}
+
+    {{-- Main Content Section Start --}}
     @yield('main_content')
-    {{-- Main Content Session End --}}
+    {{-- Main Content Section End --}}
 
-    {{-- Footer Session Start --}}
+    {{-- Footer Section Start --}}
     <x-footer></x-footer>
-    {{-- Footer Session End --}}
+    {{-- Footer Section End --}}
 
     {{-- My JS CDN --}}
     @include('assets.js')
