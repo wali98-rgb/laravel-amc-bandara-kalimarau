@@ -29,12 +29,12 @@
             </div>
         @else
             <div class="container">
-                @foreach ($kejadian as $key->$item)
+                @foreach ($kejadian as $item)
                     <div class="card mb-3" style="max-width: 100%;">
                         <div class="row g-0">
                             <div class="col-md-4">
-                                <img src="{{ asset('frontend/img/caro2.jpg') }}" class="img-fluid rounded-start"
-                                    alt="...">
+                                <img src="{{ asset('upload/kejadian/' . $item->img_kejadian) }}"
+                                    class="img-fluid rounded-start" alt="...">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
@@ -48,6 +48,9 @@
                         </div>
                     </div>
                 @endforeach
+                <div class="d-flex justify-content-end">
+                    {{ $kejadian->links() }}
+                </div>
             </div>
         @endif
     </div>

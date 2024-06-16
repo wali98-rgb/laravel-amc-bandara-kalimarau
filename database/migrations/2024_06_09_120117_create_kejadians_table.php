@@ -13,12 +13,14 @@ return new class extends Migration
     {
         Schema::create('kejadians', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nama_pelapor', length: 255);
+            $table->string('email_pelapor', length: 200);
             $table->string('jenis_kejadian', length: 200);
-            $table->time('waktu_kejadian', precision: 3);
+            $table->time('waktu_kejadian');
             $table->date('tanggal_kejadian');
             $table->longText('kronologi_kejadian');
-            $table->binary('img_kejadian');
-            $table->enum('status_kejadian', ['ya', 'tidak'])->default('tidak');
+            $table->text('img_kejadian')->nullable();
+            $table->enum('status_kejadian', ['Teratasi', 'Tidak Teratasi'])->default('Tidak Teratasi');
             $table->timestamps();
         });
     }

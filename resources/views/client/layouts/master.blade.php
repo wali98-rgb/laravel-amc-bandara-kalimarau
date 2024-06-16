@@ -37,6 +37,7 @@
 
     {{-- My JS CDN --}}
     @include('assets.js')
+    {{-- @include('sweetalert::alert') --}}
 </body>
 
 </html>
