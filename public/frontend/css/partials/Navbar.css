@@ -1,4 +1,4 @@
-/* Navbar Session CSS */
+/* Navbar Section CSS */
 .n4p21R_ {
     position: fixed;
     padding: 1rem 7%;
@@ -59,3 +59,38 @@
 .n4p21R_ .n4p21RexT li a:last-child {
     margin: 0 0 0 2rem;
 }
+
+/* Navbar Section CSS */
+
+/* Navbar Form Section CSS */
+.n4v2 {
+    padding: 1rem 7%;
+    background-color: var(--n4p21R);
+}
+
+.n4v2 .n4v2l0 {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.n4v2 .n4v2l0 .n4v2Im9 {
+    margin: 0 1rem 0 0;
+    width: 3rem;
+    height: 100%;
+}
+
+.n4v2 .n4v2l0 .n4v2Im9 img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: .5rem;
+}
+
+.n4v2 .n4v2l0 h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    color: var(--cL12F);
+}
+
+/* Navbar Form Section CSS */
