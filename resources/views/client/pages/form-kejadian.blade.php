@@ -21,11 +21,16 @@
 
     {{-- Navbar Section Start --}}
     <nav class="n4v2">
-        <div class="n4v2l0">
-            <div class="n4v2Im9">
-                <img src="{{ asset('frontend/img/logo-amc.jpeg') }}" alt="AMC Bandara Kalimarau">
+        <div class="n4v2l0 d-flex justify-content-between align-items-center">
+            <div class="pt-3">
+                <img width="50%" src="{{ asset('frontend/img/header.png') }}" alt="">
             </div>
-            <h3>AMC Bandara Kalimarau</h3>
+            <div style="width: 53rem;" class="text-right d-flex justify-content-between align-items-center">
+                <h3>AMC Bandara Kalimarau</h3>
+                <div class="n4v2Im9">
+                    <img src="{{ asset('frontend/img/logo-amc.jpeg') }}" alt="AMC Bandara Kalimarau">
+                </div>
+            </div>
         </div>
     </nav>
     {{-- Navbar Section End --}}
