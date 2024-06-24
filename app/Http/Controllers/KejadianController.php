@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Kejadian;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+
+use function PHPUnit\Framework\isEmpty;
 
 class KejadianController extends Controller
 {
@@ -17,8 +20,19 @@ class KejadianController extends Controller
      */
     public function index()
     {
+        // $kejadian = "";
+
+        $kejadians = Kejadian::all();
+
+        if (isEmpty($kejadians)) {
+            $kejadian = Kejadian::all();
+        }
         $kejadian = Kejadian::first()->paginate(5); // Menampilkan 5 data dari database
         // $kejadian = Kejadian::all();
+
+        $title = 'Hapus Kejadian!';
+        $text = "Apakah Anda yakin ingin menghapusnya?";
+        confirmDelete($title, $text);
         return view('client.pages.kejadian', compact('kejadian'));
     }
 
@@ -80,7 +94,7 @@ class KejadianController extends Controller
             'tanggal_kejadian' => $request->tanggal_kejadian,
             'kronologi_kejadian' => $request->kronologi_kejadian,
             'img_kejadian' => $fileName,
-            'status_kejadian' => 'tidak'
+            'status_kejadian' => 'Tidak Teratasi'
         ]);
 
         Log::info('Data saved successfully');
@@ -95,7 +109,7 @@ class KejadianController extends Controller
 
     public function create()
     {
-        //
+        return view('client.pages.kejadian.create');
     }
 
     /**
@@ -113,7 +127,7 @@ class KejadianController extends Controller
             'waktu_kejadian' => 'required|date_format:H:i',
             'tanggal_kejadian' => 'required',
             'kronologi_kejadian' => 'required',
-            'img_kejadian' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            'img_kejadian' => 'required|image|mimes:jpeg,jpg,png|max:2048',
             'status_kejadian' => 'nullable'
         ]);
 
@@ -134,12 +148,13 @@ class KejadianController extends Controller
             'tanggal_kejadian' => $request->tanggal_kejadian,
             'kronologi_kejadian' => $request->kronologi_kejadian,
             'img_kejadian' => $fileName,
-            'status_kejadian' => 'tidak'
+            'status_kejadian' => 'Tidak Teratasi'
         ]);
 
         Log::info('Data saved successfully');
 
-        return redirect()->route('kejadian.index')->with('success', 'Kejadian Berhasil Dikirim');
+        Alert::toast('Kejadian Berhasil Ditambahkan', 'success');
+        return redirect()->route('kejadian.index')->with('success', 'Kejadian Berhasil Ditambahkan');
     }
 
     /**
@@ -148,7 +163,8 @@ class KejadianController extends Controller
     public function show(string $id)
     {
         $kejadian = Kejadian::findOrFail($id);
-        return view('client.pages.show', compact('kejadian'));
+
+        return view('client.pages.kejadian.show', compact('kejadian'));
     }
 
     /**
@@ -157,7 +173,7 @@ class KejadianController extends Controller
     public function edit(string $id)
     {
         $kejadian = Kejadian::findOrFail($id);
-        return view('client.pages.edit', compact('kejadian'));
+        return view('client.pages.kejadian.edit', compact('kejadian'));
     }
 
     /**
@@ -188,7 +204,7 @@ class KejadianController extends Controller
             $fileName = time() . '-' . uniqid() . '-' . $hashFile;
             $img_kejadian->move(public_path('upload/kejadian'), $fileName);
 
-            Storage::delete(public_path('upload/kejadian/' . $kejadian->img_kejadian));
+            unlink(public_path('upload/kejadian/' . $kejadian->img_kejadian));
 
             // Update data bersama foto
             $kejadian->update([
@@ -199,7 +215,7 @@ class KejadianController extends Controller
                 'tanggal_kejadian' => $request->tanggal_kejadian,
                 'kronologi_kejadian' => $request->kronologi_kejadian,
                 'img_kejadian' => $fileName,
-                'status_kejadian' => 'tidak'
+                'status_kejadian' => $request->status_kejadian
             ]);
         } else {
             // Update tanpa mengubah foto
@@ -210,11 +226,33 @@ class KejadianController extends Controller
                 'waktu_kejadian' => $request->waktu_kejadian,
                 'tanggal_kejadian' => $request->tanggal_kejadian,
                 'kronologi_kejadian' => $request->kronologi_kejadian,
-                'status_kejadian' => 'tidak'
+                'status_kejadian' => $request->status_kejadian
             ]);
         }
 
-        return redirect()->route('kejadian.update')->with(['success' => 'Kejadian Berhasil Diperbaharui']);
+        Alert::toast('Kejadian Berhasil Diubah', 'success');
+        return redirect()->route('kejadian.index')->with('success', 'Kejadian Berhasil Diperbaharui');
+    }
+
+    // Update Status Kejadian
+    public function udpateStatus(Request $request, string $id)
+    {
+        $request->validate([
+            'status_kejadian' => 'nullable'
+        ]);
+
+        $statusKejadian = Kejadian::findOrFail($id);
+
+        $statusKejadian->update([
+            'status_kejadian' => 'Teratasi'
+        ]);
+
+        // DB::table('kejadians')->where('id', $id)->update([
+        //     'status_kejadian' => 'Teratasi'
+        // ]);
+
+        Alert::toast('Status Berhasil Diubah', 'success');
+        return redirect()->route('kejadian.show', $statusKejadian->id)->with('success', 'Status Berhasil Diubah');
     }
 
     /**
@@ -226,11 +264,13 @@ class KejadianController extends Controller
         $kejadian = Kejadian::findOrFail($id);
 
         // Hapus data foto
-        Storage::delete(public_path('upload/kejadian/' . $kejadian->img_kejadian));
+        // Storage::delete(public_path('upload/kejadian/' . $kejadian->img_kejadian));
+        unlink(public_path('upload/kejadian/' . $kejadian->img_kejadian));
 
         // Menghapus Data dari database
         $kejadian->delete();
 
-        return redirect()->route('kejadian.destroy')->with(['success' => 'Kejadian Berhasil Dihapus']);
+        Alert::alert('Sukses', 'Kejadian Berhasil Dihapus', 'success');
+        return redirect()->route('kejadian.index')->with('success', 'Kejadian Berhasil Dihapus');
     }
 }
