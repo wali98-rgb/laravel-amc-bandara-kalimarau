@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use RealRashid\SweetAlert\Facades\Alert;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 use function PHPUnit\Framework\isEmpty;
 
@@ -58,7 +59,7 @@ class KejadianController extends Controller
             'waktu_kejadian' => 'required|date_format:H:i',
             'tanggal_kejadian' => 'required',
             'kronologi_kejadian' => 'required',
-            'img_kejadian' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+            'img_kejadian' => 'required|image|mimes:jpeg,jpg,png|max:16384',
             'status_kejadian' => 'nullable'
         ]);
 
@@ -69,7 +70,7 @@ class KejadianController extends Controller
         //     'waktu_kejadian' => 'required|date_format:H:i:s.v',
         //     'tanggal_kejadian' => 'required',
         //     'kronologi_kejadian' => 'required',
-        //     'img_kejadian' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+        //     'img_kejadian' => 'nullable|image|mimes:jpeg,jpg,png|max:16384',
         //     'status_kejadian' => 'nullable'
         // ]);
 
@@ -83,7 +84,7 @@ class KejadianController extends Controller
         $img_kejadian = $request->file('img_kejadian');
         $hashFile = $img_kejadian->hashName();
         $fileName = time() . '-' . uniqid() . '-' . $hashFile;
-        $img_kejadian->move(public_path('upload/kejadian'), $fileName);
+        $img_kejadian->move('upload/kejadian', $fileName);
 
         // Proses memasukkan data ke database
         Kejadian::create([
@@ -127,7 +128,7 @@ class KejadianController extends Controller
             'waktu_kejadian' => 'required|date_format:H:i',
             'tanggal_kejadian' => 'required',
             'kronologi_kejadian' => 'required',
-            'img_kejadian' => 'required|image|mimes:jpeg,jpg,png|max:2048',
+            'img_kejadian' => 'required|image|mimes:jpeg,jpg,png|max:16384',
             'status_kejadian' => 'nullable'
         ]);
 
@@ -137,7 +138,7 @@ class KejadianController extends Controller
         $img_kejadian = $request->file('img_kejadian');
         $hashFile = $img_kejadian->hashName();
         $fileName = time() . '-' . uniqid() . '-' . $hashFile;
-        $img_kejadian->move(public_path('upload/kejadian'), $fileName);
+        $img_kejadian->move('upload/kejadian', $fileName);
 
         // Proses Memasukkan data ke database
         Kejadian::create([
@@ -189,7 +190,7 @@ class KejadianController extends Controller
             'waktu_kejadian' => 'required|date_format:H:i',
             'tanggal_kejadian' => 'required',
             'kronologi_kejadian' => 'required',
-            'img_kejadian' => 'nullable|image|mimes:jpeg,jpg,png|max:2048',
+            'img_kejadian' => 'nullable|image|mimes:jpeg,jpg,png|max:16384',
             'status_kejadian' => 'nullable'
         ]);
 
@@ -202,9 +203,9 @@ class KejadianController extends Controller
             $img_kejadian = $request->file('img_kejadian');
             $hashFile = $img_kejadian->hashName();
             $fileName = time() . '-' . uniqid() . '-' . $hashFile;
-            $img_kejadian->move(public_path('upload/kejadian'), $fileName);
+            $img_kejadian->move('upload/kejadian', $fileName);
 
-            unlink(public_path('upload/kejadian/' . $kejadian->img_kejadian));
+            unlink('upload/kejadian/' . $kejadian->img_kejadian);
 
             // Update data bersama foto
             $kejadian->update([
@@ -264,13 +265,19 @@ class KejadianController extends Controller
         $kejadian = Kejadian::findOrFail($id);
 
         // Hapus data foto
-        // Storage::delete(public_path('upload/kejadian/' . $kejadian->img_kejadian));
-        unlink(public_path('upload/kejadian/' . $kejadian->img_kejadian));
+        // Storage::delete('upload/kejadian/' . $kejadian->img_kejadian);
+        unlink('upload/kejadian/' . $kejadian->img_kejadian);
 
         // Menghapus Data dari database
         $kejadian->delete();
 
         Alert::alert('Sukses', 'Kejadian Berhasil Dihapus', 'success');
         return redirect()->route('kejadian.index')->with('success', 'Kejadian Berhasil Dihapus');
+    }
+
+    public function generate()
+    {
+        $qrcode = QrCode::size(400)->backgroundColor(0, 0, 0, 0)->generate('https://www.amckalimarau.site/form-kejadian');
+        return view('client.pages.qr-page', compact('qrcode'));
     }
 }
