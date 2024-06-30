@@ -23,7 +23,7 @@
         @if ($kejadian->isEmpty())
             <div class="c0ntM4 container">
                 <div class="c0ntM4im9 mb-3">
-                    <img src="{{ asset('frontend/img/no-data-available.jpg') }}" alt="">
+                    <img src="{{ asset('frontend/img/no-data-available.jpg') }}" alt="Data Belum Tersedia!">
                 </div>
                 <h2 class="text-center">Tidak ada kejadian yang Tersedia...</h2>
             </div>
@@ -36,7 +36,8 @@
                                 style="overflow: hidden; border-radius: .2rem 0 0 .2rem;">
                                 <img style="width: 100%; height: 100%; object-fit: contain;"
                                     src="{{ asset('upload/kejadian/' . $item->img_kejadian) }}"
-                                    class="img-fluid rounded-start" alt="...">
+                                    class="img-fluid rounded-start"
+                                    alt="{{ asset('upload/kejadian/' . $item->img_kejadian) }}">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">

@@ -25,3 +25,6 @@ Route::resource('kejadian', KejadianController::class);
 Route::put('/status-kejadian/{id}', [KejadianController::class, 'udpateStatus'])->name('kejadian.updateStatus');
 // Route::get('/kejadian', [KejadianController::class, 'index']);
 // Route::post('/kejadian', [KejadianController::class, 'store'])->name('kejadian.index');
+
+// Route QR
+Route::get('/qr', [KejadianController::class, 'generate'])->name('qr.page');
