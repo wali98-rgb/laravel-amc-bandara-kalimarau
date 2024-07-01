@@ -9,5 +9,16 @@
         <li><a href="/">Dashboard</a></li>
         <li><a href="/kejadian">Kejadian</a></li>
         <li><a href="/tentang-kami">Tentang Kami</a></li>
+        <li class="ml-4">
+            <a href="{{ route('logout') }}"
+                onclick="event.preventDefault();
+                document.getElementById('logout-form').submit();">
+                {{ __('Logout') }}
+            </a>
+
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </li>
     </div>
 </nav>
